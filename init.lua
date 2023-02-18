@@ -61,6 +61,7 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   -- 'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
+  'tpope/vim-surround',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -196,6 +197,7 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+  { 'romgrk/barbar.nvim',     dependencies = 'nvim-tree/nvim-web-devicons' },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -559,5 +561,8 @@ vim.keymap.set("n", "<Leader>r", ":RunCode<CR>", { silent = true })
 vim.keymap.set({ "n", "v" }, "<Leader>y", [["+y]], { silent = true })
 vim.keymap.set({ "n", "v" }, "<Leader>p", [["+p]], { silent = true })
 
+--Barbar
+vim.keymap.set('n', '<C-p>', '<Cmd>BufferPick<CR>', { silent = true })
+vim.keymap.set('n', '<C-c>', '<Cmd>BufferClose<CR>', { silent = true })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
