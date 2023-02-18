@@ -59,7 +59,6 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   'tpope/vim-fugitive',
-  -- 'tpope/vim-rhubarb',
   'tpope/vim-sleuth',
   'tpope/vim-surround',
 
