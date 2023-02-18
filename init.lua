@@ -610,5 +610,9 @@ vim.keymap.set({ "n", "v" }, "<Leader>p", [["+p]], { silent = true })
 --Barbar
 vim.keymap.set('n', '<C-p>', '<Cmd>BufferPick<CR>', { silent = true })
 vim.keymap.set('n', '<C-c>', '<Cmd>BufferClose<CR>', { silent = true })
+
+-- Leap
+vim.keymap.del({ 'x', 'o' }, 'x')
+vim.keymap.del({ 'x', 'o' }, 'X')
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
