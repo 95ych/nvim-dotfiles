@@ -405,19 +405,10 @@ cmp.setup({
     ["<C-d>"] = cmp.mapping.scroll_docs( -4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-c>"] = cmp.mapping.abort(),
-    ["<Down>"] = cmp.mapping.select_next_item({
-      behaviour = cmp.SelectBehavior.Select
-    }),
-    ["<Up>"] = cmp.mapping.select_prev_item({
-      behaviour = cmp.SelectBehavior.Select
-    }),
-    ["<Right>"] = cmp.mapping.confirm({ select = true }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if not luasnip_available then
         return
       end
-      -- if cmp.visible() then
-      --     cmp.select_next_item({ behaviour = cmp.SelectBehavior.Select }),
       if luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif fallback ~= nil then
@@ -425,8 +416,6 @@ cmp.setup({
       end
     end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
-      -- if cmp.visible() then
-      --     cmp.select_prev_item({ behaviour = cmp.SelectBehavior.Select }),
       if luasnip_available then
         print("luasnip avail")
         if luasnip.jumpable( -1) then
@@ -446,7 +435,6 @@ cmp.setup({
     { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = "path" },
-    { name = "latex_symbols" },
     { name = "buffer" },
   },
   experimental = {
