@@ -20,7 +20,7 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-sleuth',
   'tpope/vim-surround',
-
+  'github/copilot.vim',
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
