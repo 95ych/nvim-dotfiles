@@ -102,7 +102,7 @@ require('lazy').setup({
     build = ":TSUpdate",
   },
   { 'romgrk/barbar.nvim',     dependencies = 'nvim-tree/nvim-web-devicons' },
-
+  'lervag/vimtex',
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -404,16 +404,16 @@ cmp.setup({
     ["<C-d>"] = cmp.mapping.scroll_docs( -4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-c>"] = cmp.mapping.abort(),
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if not luasnip_available then
-        return
-      end
-      if luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif fallback ~= nil then
-        fallback()
-      end
-    end, { "i", "s" }),
+    -- ["<Tab>"] = cmp.mapping(function(fallback)
+    --   if not luasnip_available then
+    --     return
+    --   end
+    --   if luasnip.expand_or_jumpable() then
+    --     luasnip.expand_or_jump()
+    --   elseif fallback ~= nil then
+    --     fallback()
+    --   end
+    -- end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if luasnip_available then
         print("luasnip avail")
@@ -505,5 +505,12 @@ vim.keymap.set('n', '<C-c>', '<Cmd>BufferClose<CR>', { silent = true })
 -- Leap
 vim.keymap.del({ 'x', 'o' }, 'x')
 vim.keymap.del({ 'x', 'o' }, 'X')
+
+-- VimTex
+vim.g.tex_flavor = "latex"
+vim.g.vimtex_quickfix_mode = 0
+vim.g.vimtex_view_method = "zathura"
+vim.o.conceallevel = 0
+vim.g.tex_conceal = "abdmg"
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
