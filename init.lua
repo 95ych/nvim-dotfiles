@@ -254,7 +254,7 @@ vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+-- vim.o.completeopt = 'menu,menuone,noinsert'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
@@ -495,6 +495,7 @@ cmp.setup({
     completeopt = 'menu,menuone,noinsert',
     border = "single"
   },
+  preselect = cmp.PreselectMode.None,
   snippet = {
     expand = function(args)
       if luasnip_available then
@@ -515,9 +516,20 @@ cmp.setup({
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-c>"] = cmp.mapping.abort(),
+    ['<C-n>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        cmp.complete()
+        vim.wait(500, function()
+          return cmp.visible()
+        end)
+        cmp.select_next_item()
+      end
+    end,
     ["<Tab>"] = cmp.mapping(function(fallback)
       if not luasnip_available then
-        cmp.mapping.confirm({ select = true })
+        return
       end
       if luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
