@@ -33,7 +33,7 @@ require('lazy').setup({
   },
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'quangnguyen30192/cmp-nvim-ultisnips' },
   },
   'rafamadriz/friendly-snippets',
   { 'folke/which-key.nvim',          opts = {} },
@@ -103,6 +103,9 @@ require('lazy').setup({
   },
   { 'romgrk/barbar.nvim',     dependencies = 'nvim-tree/nvim-web-devicons' },
   'lervag/vimtex',
+  'sirver/ultisnips',
+  'KeitaNakamura/tex-conceal.vim',
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -404,16 +407,16 @@ cmp.setup({
     ["<C-d>"] = cmp.mapping.scroll_docs( -4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-c>"] = cmp.mapping.abort(),
-    -- ["<Tab>"] = cmp.mapping(function(fallback)
-    --   if not luasnip_available then
-    --     return
-    --   end
-    --   if luasnip.expand_or_jumpable() then
-    --     luasnip.expand_or_jump()
-    --   elseif fallback ~= nil then
-    --     fallback()
-    --   end
-    -- end, { "i", "s" }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if not luasnip_available then
+        return
+      end
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif fallback ~= nil then
+        fallback()
+      end
+    end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if luasnip_available then
         print("luasnip avail")
@@ -431,6 +434,7 @@ cmp.setup({
     ["<C-j>"] = cmp.mapping.confirm({ select = true }),
   }),
   sources = {
+    { name = "ultisnips" },
     { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = "path" },
@@ -510,7 +514,12 @@ vim.keymap.del({ 'x', 'o' }, 'X')
 vim.g.tex_flavor = "latex"
 vim.g.vimtex_quickfix_mode = 0
 vim.g.vimtex_view_method = "zathura"
-vim.o.conceallevel = 0
+vim.o.conceallevel = 1
 vim.g.tex_conceal = "abdmg"
+-- vim.g.UltiSnipsSnippetDirectories = '[~/.config/nvim/Ultisnips]'
+vim.cmd("let g:UltiSnipsSnippetDirectories = ['/home/cyk/.config/nvim/latex-snippets']")
+vim.g.UltiSnipsExpandTrigger = "<C-j>"
+vim.g.UltiSnipsJumpForwardTrigger = "<tab>"
+vim.g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
