@@ -607,19 +607,6 @@ vim.keymap.set("n", "L", function()
   end
 end, { silent = true })
 
--- Neovide settings
-if vim.g.neovide then
-  vim.g.neovide_cursor_vfx_mode = "railgun"
-  vim.g.neovide_cursor_animation_length = 0.1
-  vim.g.neovide_cursor_trail_length = 0.3
-  vim.o.guifont = "Ligalex Mono:h15"
-  vim.g.neovide_cursor_vfx_particle_lifetime = 6.2
-  vim.g.neovide_cursor_vfx_particle_density = 9.0
-  vim.g.neovide_cursor_vfx_particle_speed = 10.0
-  vim.g.neovide_font_hinting = 'none'
-  vim.g.neovide_font_edging = 'subpixelantialias'
-  vim.g.neovide_cursor_vfx_opacity = 700.0
-end
 
 --Navigation
 vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
