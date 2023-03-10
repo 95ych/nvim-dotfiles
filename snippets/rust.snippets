@@ -2,9 +2,7 @@ snippet cp "cp starter template"
 	use std::io::{self, prelude::*};
 	
 	fn solve<B: BufRead, W: Write>(mut scan: Scanner<B>, mut w: W) {
-	    let n = scan.token();
-	    ${0}
-	    writeln!(w, "{}", ans);
+	    for i in scan.token()${0}
 	}
 	
 	fn main() {
