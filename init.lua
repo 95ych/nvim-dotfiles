@@ -51,13 +51,31 @@ require('lazy').setup({
     },
   },
 
+
   { -- Theme inspired by Atom
     "olimorris/onedarkpro.nvim",
     priority = 1000,
     config = function()
+      require("onedarkpro").setup({
+        styles = {
+          types = "italic",
+          methods = "underline",
+          numbers = "NONE",
+          strings = "NONE",
+          comments = "italic",
+          keywords = "NONE",
+          constants = "bold",
+          functions = "italic",
+          operators = "NONE",
+          variables = "NONE",
+          parameters = "NONE",
+          conditionals = "italic",
+          virtual_text = "NONE",
+        }
+      })
       vim.cmd.colorscheme 'onedark_dark'
       vim.cmd("hi PmenuSel guibg = #121121")
-      vim.api.nvim_set_hl(0, 'Comment', { italic = true })
+      -- vim.api.nvim_set_hl(0, 'Comment', { italic = true })
     end,
   },
 
@@ -228,7 +246,10 @@ require('nvim-treesitter.configs').setup {
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
 
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
@@ -498,7 +519,6 @@ vim.keymap.set("n", "L", function()
     vim.fn.cursor(".", end_column)
   end
 end, { silent = true })
-
 
 --Navigation
 vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
