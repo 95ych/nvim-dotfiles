@@ -49,6 +49,10 @@ return {
         if client.name == 'tsserver' then
           return
         end
+        -- disable for html filetype
+        if vim.bo.filetype == 'html' then
+          return
+        end
 
         -- Create an autocmd that will run *before* we save the buffer.
         --  Run the formatting command for the LSP that has just attached.
