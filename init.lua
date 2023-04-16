@@ -21,7 +21,8 @@ require('lazy').setup({
   'tpope/vim-sleuth',
   'tpope/vim-surround',
   'github/copilot.vim',
-  { -- LSP Configuration & Plugins
+  {
+    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -31,13 +32,16 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
-  { -- Autocompletion
+  {
+    -- Autocompletion
     'hrsh7th/nvim-cmp',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'quangnguyen30192/cmp-nvim-ultisnips' },
+    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
+      'quangnguyen30192/cmp-nvim-ultisnips' },
   },
   'rafamadriz/friendly-snippets',
   { 'folke/which-key.nvim',          opts = {} },
-  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+  {
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -52,7 +56,8 @@ require('lazy').setup({
   },
 
 
-  { -- Theme inspired by Atom
+  {
+    -- Theme inspired by Atom
     "olimorris/onedarkpro.nvim",
     priority = 1000,
     config = function()
@@ -79,7 +84,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Set lualine as statusline
+  {
+    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
@@ -90,7 +96,8 @@ require('lazy').setup({
     },
   },
 
-  { -- Add indentation guides even on blank lines
+  {
+    -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- See `:help indent_blankline.txt`
     opts = {
@@ -113,7 +120,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -428,7 +436,7 @@ cmp.setup({
     }
   },
   mapping = cmp.mapping.preset.insert({
-    ["<C-d>"] = cmp.mapping.scroll_docs( -4),
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-c>"] = cmp.mapping.abort(),
     ['<C-n>'] = function(fallback)
@@ -455,8 +463,8 @@ cmp.setup({
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if luasnip_available then
         print("luasnip avail")
-        if luasnip.jumpable( -1) then
-          luasnip.jump( -1)
+        if luasnip.jumpable(-1) then
+          luasnip.jump(-1)
         elseif fallback ~= nil then
           fallback()
         end
@@ -484,19 +492,19 @@ cmp.setup({
         vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
       end
       vim_item.menu = ({
-            npm = "",
-            buffer = "﬘",
-            nvim_lsp = "",
-            luasnip = "",
-            nvim_lua = "",
-            emoji = "ﲃ",
-            latex_symbols = "",
-            treesitter = "滑",
-            path = "",
-            zsh = "",
-            spell = "暈",
-            rg = "縷",
-          })[entry.source.name]
+        npm = "",
+        buffer = "﬘",
+        nvim_lsp = "",
+        luasnip = "",
+        nvim_lua = "",
+        emoji = "ﲃ",
+        latex_symbols = "",
+        treesitter = "滑",
+        path = "",
+        zsh = "",
+        spell = "暈",
+        rg = "縷",
+      })[entry.source.name]
       return vim_item
     end,
   },
@@ -531,7 +539,6 @@ vim.keymap.set("n", "<Leader>f", ":NeoTreeFocusToggle<CR>", { silent = true })
 
 --Write and Quit
 vim.keymap.set({ "n" }, "<C-s>", ":w<CR>", { silent = true })
-vim.keymap.set({ "n" }, "<C-x>", ":q!<CR>", { silent = true })
 
 --CodeRunner
 vim.keymap.set("n", "<Leader>r", ":RunCode<CR>", { silent = true })
