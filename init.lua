@@ -98,7 +98,8 @@ require('lazy').setup({
   -- Useful plugin to show you pending keybinds.
   'rafamadriz/friendly-snippets',
   { 'folke/which-key.nvim',          opts = {} },
-  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+  {
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -129,7 +130,8 @@ require('lazy').setup({
   },
 
 
-  { -- Theme inspired by Atom
+  {
+    -- Theme inspired by Atom
     "olimorris/onedarkpro.nvim",
     priority = 1000,
     config = function()
@@ -636,7 +638,6 @@ vim.keymap.set("n", "<Leader>f", ":NeoTreeFocusToggle<CR>", { silent = true })
 
 --Write and Quit
 vim.keymap.set({ "n" }, "<C-s>", ":w<CR>", { silent = true })
-vim.keymap.set({ "n" }, "<C-x>", ":q!<CR>", { silent = true })
 
 --CodeRunner
 vim.keymap.set("n", "<Leader>r", ":RunCode<CR>", { silent = true })
