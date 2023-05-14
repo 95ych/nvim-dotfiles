@@ -19,7 +19,8 @@ return {
 				python = "python3 -u",
 				typescript = "deno run",
 				rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
-				cpp = "cd $dir && g++ -std=c++17 $fileName && $dir/$fileNameWithoutExt"
+				cpp =
+				"cd $dir && g++ -std=c++17 $fileName -o $fileNameWithoutExt && $dir/$fileNameWithoutExt"
 			},
 		})
 	end
