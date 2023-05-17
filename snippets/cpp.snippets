@@ -1,0 +1,48 @@
+snippet cp "cp starter template"
+
+	#include "bits/stdc++.h"
+	using namespace std;
+	#define max(a, b) (a < b ? b : a)
+	#define min(a, b) ((a > b) ? b : a)
+	#define rep(i, begin, end)                                                                         \
+		for(__typeof(end) i = (begin) - ((begin) > (end)); i != (end) - ((begin) > (end));             \
+			i += 1 - 2 * ((begin) > (end)))
+	#ifndef ONLINE_JUDGE //DEBUG
+	#	include "prettyprint.hpp"
+	#else
+	#	define dbg (...)
+	#endif
+	#define INF 1000000000000000003
+	typedef long long int ll;
+	typedef pair<ll, ll> ii;
+	typedef vector<ll> vi;
+	typedef vector<vector<ll>> vvi;
+	typedef vector<vector<ii>> vvii;
+	#define ff first
+	#define ss second
+	#define pb push_back
+	#define eb emplace_back
+	#define pob pop_back
+	#define mp make_pair
+	#define mt make_tuple
+	#define endl "\n"
+	
+	ll n;
+	
+	void solve()
+	{
+		cin >> n;
+		${0}
+	}
+	
+	signed main()
+	{
+		ios::sync_with_stdio(false);
+		cin.tie(nullptr);
+		cout.tie(nullptr);
+		int t;
+		cin >> t;
+		while(t--)
+			solve();
+		return 0;
+	}
