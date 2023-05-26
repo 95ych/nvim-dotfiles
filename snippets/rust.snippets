@@ -1,8 +1,8 @@
 snippet cp "cp starter template"
 	use std::io::{self, prelude::*};
 	
-	fn solve<B: BufRead, W: Write>(mut scan: Scanner<B>, mut w: W) {
-	    for i in scan.token()${0}
+	fn solve<B: BufRead, W: Write>(mut scan: Scanner<B>, mut _w: W) {
+	    for _ in 0..scan.token()${0}
 	}
 	
 	fn main() {
