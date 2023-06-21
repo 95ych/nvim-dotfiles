@@ -28,7 +28,7 @@ require('lazy').setup({
       -- Automatically install LSPs to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
       'folke/neodev.nvim',
     },
   },
@@ -90,7 +90,7 @@ require('lazy').setup({
     opts = {
       options = {
         theme = 'horizon',
-        section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         component_separators = { left = '|', right = '|' },
       },
     },
@@ -129,9 +129,9 @@ require('lazy').setup({
     build = ":TSUpdate",
   },
   { 'romgrk/barbar.nvim',     dependencies = 'nvim-tree/nvim-web-devicons' },
-  'lervag/vimtex',
-  'sirver/ultisnips',
-  'KeitaNakamura/tex-conceal.vim',
+  -- 'lervag/vimtex',
+  -- 'sirver/ultisnips',
+  -- 'KeitaNakamura/tex-conceal.vim',
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -366,10 +366,10 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-  clangd = {},
-  gopls = {},
-  pyright = {},
-  rust_analyzer = {},
+  -- clangd = {},
+  -- gopls = {},
+  -- pyright = {},
+  -- rust_analyzer = {},
   -- tsserver = {},
 
   lua_ls = {
