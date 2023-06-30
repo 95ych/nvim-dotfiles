@@ -158,6 +158,7 @@ vim.o.hlsearch = false
 
 -- Make line numbers default
 vim.wo.number = true
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -538,7 +539,7 @@ vim.keymap.set("n", "<Leader>sc", ":set spell!<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>f", ":NeoTreeFocusToggle<CR>", { silent = true })
 
 --Write and Quit
-vim.keymap.set({ "n" }, "<C-s>", ":w<CR>", { silent = true })
+vim.keymap.set({ "n", "i" }, "<C-s>", ":w<CR>", { silent = true })
 
 --CodeRunner
 vim.keymap.set("n", "<Leader>r", ":RunCode<CR>", { silent = true })
