@@ -637,11 +637,12 @@ vim.keymap.set("n", "<Leader>sc", ":set spell!<CR>", { silent = true })
 -- NeoTree
 vim.keymap.set("n", "<Leader>f", ":NeoTreeFocusToggle<CR>", { silent = true })
 
---Write and Quit
+--Write
 vim.keymap.set({ "n" }, "<C-s>", ":w<CR>", { silent = true })
 
 --CodeRunner
-vim.keymap.set("n", "<Leader>r", ":RunCode<CR>", { silent = true })
+vim.keymap.set("n", "<Leader>rr", ":RunCode<CR>", { silent = true })
+vim.keymap.set("n", "<Leader>rp", ":RunProject<CR>", { silent = true })
 
 -- System clipboard
 vim.keymap.set({ "n", "v" }, "<Leader>y", [["+y]], { silent = true })
