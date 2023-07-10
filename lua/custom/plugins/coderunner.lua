@@ -15,7 +15,9 @@ return {
 				border = "double"
 			},
 			filetype = {
-				java = "cd $dir && java $fileName",
+				java =
+				"java $fileName;or set B (basename $dir) and echo $B and cd $dir && javac  -d . *.java && java $B/$fileNameWithoutExt;",
+				-- java = "set B (basename $dir); echo $B",
 				python = "python3 -u",
 				typescript = "deno run",
 				rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
