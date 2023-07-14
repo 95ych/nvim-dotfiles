@@ -16,7 +16,7 @@ return {
 			},
 			filetype = {
 				java =
-				"java $fileName;or set B (basename $dir) and echo $B and cd $dir && javac  -d . *.java && java $B/$fileNameWithoutExt;",
+				"java $fileName;or set B (basename $dir); echo \n; echo \"--------Trying with Class object---------\" ;echo '\n'; and cd $dir && javac  -d . *.java && java $B/$fileNameWithoutExt;",
 				-- java = "set B (basename $dir); echo $B",
 				python = "python3 -u",
 				typescript = "deno run",
