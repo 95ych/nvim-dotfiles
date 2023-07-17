@@ -467,7 +467,11 @@ local servers = {
   gopls = {},
   pyright = {},
   rust_analyzer = {},
-  -- jdtls = {},
+  jdtls = {
+    java = {
+      signatureHelp = { enabled = true }
+    }
+  },
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
