@@ -717,6 +717,9 @@ require 'treesitter-context'.setup {
   zindex = 20,     -- The Z-index of the context window
   on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
+vim.keymap.set("n", "[c", function()
+  require("treesitter-context").go_to_context()
+end, { silent = true })
 -- local jconfig = {
 --   -- The command that starts the language server
 --   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
