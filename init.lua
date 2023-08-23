@@ -456,8 +456,10 @@ local on_attach = function(client, bufnr)
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>sds', require('telescope.builtin').lsp_document_symbols, '[S]earch [D]oc [S]ymbols')
+  nmap('<leader>sws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[S]earch [W]orkspace [S]ymbols')
+  nmap('<leader>li', vim.lsp.buf.incoming_calls, '[L]ist [I]ncoming calls')
+  nmap('<leader>lo', vim.lsp.buf.outgoing_calls, '[L]ist [O]utgoing calls')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -720,6 +722,10 @@ require 'treesitter-context'.setup {
 vim.keymap.set("n", "[c", function()
   require("treesitter-context").go_to_context()
 end, { silent = true })
+-- configure the litee.nvim library
+require('litee.lib').setup({})
+-- configure litee-calltree.nvim
+require('litee.calltree').setup({})
 -- local jconfig = {
 --   -- The command that starts the language server
 --   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
