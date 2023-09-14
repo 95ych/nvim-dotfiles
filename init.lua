@@ -137,8 +137,8 @@ require('lazy').setup({
     config = function()
       require("onedarkpro").setup({
         styles = {
-          types = "italic",
-          methods = "underline",
+          types = "bold",
+          methods = "italic",
           numbers = "NONE",
           strings = "NONE",
           comments = "italic",
