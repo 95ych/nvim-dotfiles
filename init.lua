@@ -153,7 +153,7 @@ require('lazy').setup({
         }
       })
       vim.cmd.colorscheme 'onedark_dark'
-      vim.cmd("hi PmenuSel guibg = #121121")
+      vim.cmd("hi PmenuSel guibg = #3A3B3C")
       vim.cmd("hi Visual guibg = #3A3B3C")
       -- vim.api.nvim_set_hl(0, 'Comment', { italic = true })
     end,
@@ -617,6 +617,7 @@ cmp.setup({
     ["<C-j>"] = cmp.mapping.confirm({ select = true }),
   }),
   sources = {
+    { name = "codeium" },
     { name = "ultisnips" },
     { name = "luasnip" },
     { name = "nvim_lsp" },
