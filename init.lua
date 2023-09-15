@@ -193,6 +193,18 @@ require('lazy').setup({
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
   -- requirements installed.
+  'nvim-telescope/telescope-ui-select.nvim',
+  {
+    'ahmedkhalf/project.nvim',
+    config = function()
+      require("project_nvim").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  },
+>>>>>>> 743772c (added dashboard)
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -307,6 +319,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    path_display = { "smart" },
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -314,10 +327,20 @@ require('telescope').setup {
       },
     },
   },
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      }
+
+    }
+  }
 }
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'ui-select')
+pcall(require('telescope').load_extension, 'projects')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
@@ -412,7 +435,7 @@ vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = "Open diag
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -448,11 +471,23 @@ local on_attach = function(_, bufnr)
   nmap('<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
+  local augroup_id = vim.api.nvim_create_augroup(
+    "FormatModificationsDocumentFormattingGroup",
+    { clear = false }
+  )
+  vim.api.nvim_clear_autocmds({ group = augroup_id, buffer = bufnr })
 
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
+  vim.api.nvim_create_autocmd(
+    { "BufWritePre" },
+    {
+      group = augroup_id,
+      buffer = bufnr,
+      callback = function()
+        local lsp_format_modifications = require "lsp-format-modifications"
+        lsp_format_modifications.format_modifications(client, bufnr)
+      end,
+    }
+  )
 end
 
 -- Enable the following language servers
@@ -468,10 +503,8 @@ local servers = {
   gopls = {},
   pyright = {},
   rust_analyzer = {},
+  lemminx = {},
   -- jdtls = {
-  --   java = {
-  --     signatureHelp = { enabled = true }
-  --   }
   -- },
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
@@ -933,6 +966,11 @@ local function jdtls_setup(event)
       --     vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
       --   }
       -- },
+      project = {
+        referencedLibraries = {
+          '/Users/sagar/dependency-jars/*.jar'
+        },
+      },
       eclipse = {
         downloadSources = true,
       },
