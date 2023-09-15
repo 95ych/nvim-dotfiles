@@ -464,7 +464,7 @@ end
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  clangd = {},
+  -- clangd = {},
   gopls = {},
   pyright = {},
   rust_analyzer = {},
@@ -730,5 +730,25 @@ vim.cmd("let g:UltiSnipsSnippetDirectories = ['/home/cyk/.config/nvim/latex-snip
 --   },
 -- }
 -- require('jdtls').start_or_attach(jconfig)
+-- debug
+
+local dap = require('dap')
+
+-- dap.adapters.java = function(callback, config)
+--   M.execute_command({ command = 'vscode.java.startDebugSession' }, function(err0, port)
+--     assert(not err0, vim.inspect(err0))
+--     callback({ type = 'server', host = '127.0.0.1', port = port, })
+--   end)
+-- end
+dap.configurations.java = {
+  {
+    type = 'java',
+    request = 'attach',
+    name = "Debug (Attach) - Remote",
+    hostName = "127.0.0.1",
+    port = 5005,
+  },
+}
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

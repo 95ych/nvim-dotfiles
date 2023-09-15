@@ -1,4 +1,4 @@
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -11,6 +11,12 @@ local on_attach = function(_, bufnr)
     end
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
+  local _, _ = pcall(vim.lsp.codelens.refresh)
+  require("jdtls").setup_dap({ hotcodereplace = "auto" })
+  local status_ok, jdtls_dap = pcall(require, "jdtls.dap")
+  if status_ok then
+    jdtls_dap.setup_dap_main_class_configs()
   end
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
@@ -42,6 +48,41 @@ local on_attach = function(_, bufnr)
 end
 local config = {
   cmd = { '/opt/homebrew/bin/jdtls' },
+
+  -- cmd = {
+  --
+  --   "java", -- or '/path/to/java17_or_newer/bin/java'
+  --   -- depends on if `java` is in your $PATH env variable and if it points to the right version.
+  --
+  --   "-javaagent:/home/jake/.local/share/java/lombok.jar",
+  --   -- '-Xbootclasspath/a:/home/jake/.local/share/java/lombok.jar',
+  --   "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+  --   "-Dosgi.bundles.defaultStartLevel=4",
+  --   "-Declipse.product=org.eclipse.jdt.ls.core.product",
+  --   -- '-noverify',
+  --   "-Xms1g",
+  --   "--add-modules=ALL-SYSTEM",
+  --   "--add-opens",
+  --   "java.base/java.util=ALL-UNNAMED",
+  --   "--add-opens",
+  --   "java.base/java.lang=ALL-UNNAMED",
+  --   "-jar",
+  --   vim.fn.glob("/Users/sagar/.local/share/nvim/lsp_servers/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
+  --   -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
+  --   -- Must point to the                                                     Change this to
+  --   -- eclipse.jdt.ls installation                                           the actual version
+  --
+  --   "-configuration",
+  --   "/Users/sagar/.local/share/nvim/lsp_servers/jdtls/config_mac",
+  --   -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
+  --   -- Must point to the                      Change to one of `linux`, `win` or `mac`
+  --   -- eclipse.jdt.ls installation            Depending on your system.
+  --
+  --   -- See `data directory configuration` section in the README
+  -- },
+  --
+  -- This is the default if not provided, you can remove it. Or adjust as needed.
+  -- One dedicated LSP server & client will be started per unique root_dir
   settings = {
     java = {
       signatureHelp = { enabled = true },
@@ -50,5 +91,12 @@ local config = {
   },
   root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
   on_attach = on_attach,
+  init_options = {
+    bundles = {
+      vim.fn.glob("/Users/sagar/java-debug-adapter/extension/server/*jar")
+    },
+  },
 }
 require('jdtls').start_or_attach(config)
+
+-- require('jdtls.dap').setup_dap_main_class_configs()
