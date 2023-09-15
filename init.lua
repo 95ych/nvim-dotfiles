@@ -96,6 +96,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
+  'rafamadriz/friendly-snippets',
   { 'folke/which-key.nvim',          opts = {} },
   { -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -132,6 +133,7 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'onedark_dark'
+      vim.cmd("hi PmenuSel guibg = #121121")
     end,
   },
 
@@ -197,7 +199,7 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-  { 'romgrk/barbar.nvim',     dependencies = 'nvim-tree/nvim-web-devicons' },
+  { 'romgrk/barbar.nvim', dependencies = 'nvim-tree/nvim-web-devicons' },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -437,10 +439,10 @@ end
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
+  clangd = {},
+  gopls = {},
+  pyright = {},
+  rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -481,50 +483,106 @@ mason_lspconfig.setup_handlers {
 -- See `:help cmp`
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
-
-cmp.setup {
+luasnip.config.setup {
+  history = true,
+}
+require("luasnip.loaders.from_vscode").lazy_load()
+local luasnip_available = pcall(require, "luasnip")
+cmp.setup({
+  completion = {
+    completeopt = 'menu,menuone,noinsert',
+    border = "single"
+  },
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+      if luasnip_available then
+        require("luasnip").lsp_expand(args.body)
+      end
+    end
+  },
+  window = {
+    completion = {
+      border = "single",
+      side_padding = 0
+    },
+    documentation = {
+      border = "rounded"
+    }
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-c>"] = cmp.mapping.abort(),
+    ["<Down>"] = cmp.mapping.select_next_item({
+      behaviour = cmp.SelectBehavior.Select
+    }),
+    ["<Up>"] = cmp.mapping.select_prev_item({
+      behaviour = cmp.SelectBehavior.Select
+    }),
+    ["<Right>"] = cmp.mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if not luasnip_available then
+        return
+      end
+      -- if cmp.visible() then
+      --     cmp.select_next_item({ behaviour = cmp.SelectBehavior.Select }),
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif fallback ~= nil then
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      -- if cmp.visible() then
+      --     cmp.select_prev_item({ behaviour = cmp.SelectBehavior.Select }),
+      if luasnip_available then
+        print("luasnip avail")
+        if luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        elseif fallback ~= nil then
+          fallback()
+        end
+      elseif fallback ~= nil then
+        fallback()
+      else
+        print("luasnip not avail")
+      end
+    end, { "i", "s" }),
+    ["<C-j>"] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = {
+    { name = "luasnip" },
+    { name = "nvim_lsp" },
+    { name = "path" },
+    { name = "latex_symbols" },
+    { name = "buffer" },
+  },
+  experimental = {
+    native_menu = false,
+  },
+  formatting = {
+    format = function(entry, vim_item)
+      if pcall(require, "lspkind") then
+        vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
+      end
+      vim_item.menu = ({
+        npm = "",
+        buffer = "﬘",
+        nvim_lsp = "",
+        luasnip = "",
+        nvim_lua = "",
+        emoji = "ﲃ",
+        latex_symbols = "",
+        treesitter = "滑",
+        path = "",
+        zsh = "",
+        spell = "暈",
+        rg = "縷",
+      })[entry.source.name]
+      return vim_item
     end,
   },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<C-j>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-}
-
+})
 -- Jump to start/end of line
 vim.keymap.set("n", "H", function()
   local current_column = vim.fn.col(".")
@@ -551,7 +609,7 @@ vim.keymap.set("n", "<Leader>sc", ":set spell!<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>f", ":NeoTreeFocusToggle<CR>", { silent = true })
 
 --Write and Quit
-vim.keymap.set({ "n", "i" }, "<C-s>", ":w<CR>", { silent = true })
+vim.keymap.set({ "n" }, "<C-s>", ":w<CR>", { silent = true })
 vim.keymap.set({ "n" }, "<C-x>", ":q!<CR>", { silent = true })
 
 --CodeRunner
