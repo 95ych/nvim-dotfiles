@@ -233,7 +233,7 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
   'nvim-treesitter/nvim-treesitter',
-  { 'romgrk/barbar.nvim', dependencies = 'nvim-tree/nvim-web-devicons' },
+  { 'romgrk/barbar.nvim',     dependencies = 'nvim-tree/nvim-web-devicons' },
   'sirver/ultisnips',
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -248,7 +248,7 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -695,8 +695,8 @@ vim.keymap.set('n', '<C-p>', '<Cmd>BufferPick<CR>', { silent = true })
 vim.keymap.set('n', '<C-c>', '<Cmd>BufferClose<CR>', { silent = true })
 
 -- Leap
-vim.keymap.del({ 'x', 'o' }, 'x')
-vim.keymap.del({ 'x', 'o' }, 'X')
+-- vim.keymap.del({ 'x', 'o' }, 'x')
+-- vim.keymap.del({ 'x', 'o' }, 'X')
 
 -- VimTex
 vim.g.tex_flavor = "latex"
@@ -723,10 +723,6 @@ require 'treesitter-context'.setup {
 vim.keymap.set("n", "[c", function()
   require("treesitter-context").go_to_context()
 end, { silent = true })
--- configure the litee.nvim library
-require('litee.lib').setup({})
--- configure litee-calltree.nvim
-require('litee.calltree').setup({})
 -- local jconfig = {
 --   -- The command that starts the language server
 --   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
@@ -1069,17 +1065,17 @@ vim.api.nvim_create_autocmd('FileType', {
   desc = 'Setup jdtls',
   callback = jdtls_setup,
 })
-local dap = require('dap')
-
-dap.configurations.java = {
-  {
-    type = 'java',
-    request = 'attach',
-    name = "Debug (Attach) - Remote",
-    hostName = "127.0.0.1",
-    port = 5005,
-  },
-}
+-- local dap = require('dap')
+--
+-- dap.configurations.java = {
+--   {
+--     type = 'java',
+--     request = 'attach',
+--     name = "Debug (Attach) - Remote",
+--     hostName = "127.0.0.1",
+--     port = 5005,
+--   },
+-- }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
