@@ -138,6 +138,9 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       require("onedarkpro").setup({
+        options = {
+          transparency = true,
+        },
         styles = {
           types = "bold",
           methods = "italic",
