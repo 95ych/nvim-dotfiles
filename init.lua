@@ -1066,17 +1066,17 @@ vim.api.nvim_create_autocmd('FileType', {
   desc = 'Setup jdtls',
   callback = jdtls_setup,
 })
--- local dap = require('dap')
---
--- dap.configurations.java = {
---   {
---     type = 'java',
---     request = 'attach',
---     name = "Debug (Attach) - Remote",
---     hostName = "127.0.0.1",
---     port = 5005,
---   },
--- }
+local dap = require('dap')
+
+dap.configurations.java = {
+  {
+    type = 'java',
+    request = 'attach',
+    name = "Debug (Attach) - Remote",
+    hostName = "127.0.0.1",
+    port = 5005,
+  },
+}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
