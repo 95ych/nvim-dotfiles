@@ -153,7 +153,7 @@ require('lazy').setup({
           operators = "NONE",
           variables = "NONE",
           parameters = "NONE",
-          conditionals = "italic",
+          conditionals = "NONE",
           virtual_text = "NONE",
         }
       })
