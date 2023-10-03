@@ -224,6 +224,10 @@ require('lazy').setup({
     opts = {
       indent = {
         char = "╎"
+      },
+      scope = {
+        show_start = false,
+        show_end = false
       }
       -- show_end_of_line = true,
       -- show_current_context_start = true,
