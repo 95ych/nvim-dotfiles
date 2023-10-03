@@ -72,7 +72,7 @@ require('lazy').setup({
       'williamboman/mason-lspconfig.nvim',
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim',       tag = "legacy", opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -130,46 +130,86 @@ require('lazy').setup({
       end,
     },
   },
-
-
   {
-    -- Theme inspired by Atom
-    "olimorris/onedarkpro.nvim",
+    "folke/tokyonight.nvim",
+    lazy = false,
     priority = 1000,
     config = function()
-      require("onedarkpro").setup({
-        options = {
-          transparency = true,
-        },
+      require("tokyonight").setup({
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        style = "night",    -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+        transparent = true, -- Enable this to disable setting the background color
+        -- terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
         styles = {
-          types = "bold",
-          methods = "italic",
-          numbers = "NONE",
-          strings = "NONE",
-          comments = "italic",
-          keywords = "NONE",
-          constants = "bold",
-          functions = "italic",
-          operators = "NONE",
-          variables = "NONE",
-          parameters = "NONE",
-          conditionals = "NONE",
-          virtual_text = "NONE",
-        }
+          -- Style to be applied to different syntax groups
+          -- Value is any valid attr-list value for `:help nvim_set_hl`
+          comments = { italic = true },
+          keywords = {},
+          functions = { italic = true, bold = true },
+          variables = {},
+          -- Background styles. Can be "dark", "transparent" or "normal"
+          sidebars = "transparent", -- style for sidebars, see below
+          floats = "transparent",   -- style for floating windows
+        },
+        -- sidebars = { "qf", "help" },      -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+        -- day_brightness = 0.3,             -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+        -- hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
+        -- dim_inactive = false,             -- dims inactive windows
+        lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
+
+        --- You can override specific color groups to use other groups or a hex color
+        --- function will be called with a ColorScheme table
+        ---@param colors ColorScheme
+        on_colors = function(colors) end,
+
+        --- You can override specific highlights to use other groups or a hex color
+        --- function will be called with a Highlights and ColorScheme table
+        ---@param highlights Highlights
+        ---@param colors ColorScheme
+        on_highlights = function(highlights, colors) end,
       })
-      vim.cmd.colorscheme 'onedark_dark'
-      vim.cmd("hi PmenuSel guibg = #3A3B3C")
-      vim.cmd("hi Visual guibg = #3A3B3C")
-      -- vim.api.nvim_set_hl(0, 'Comment', { italic = true })
-    end,
+    end
   },
 
+  -- {
+  --   -- Theme inspired by Atom
+  --   "olimorris/onedarkpro.nvim",
+  --   -- "folke/tokyonight.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     require("onedarkpro").setup({
+  --       options = {
+  --         transparency = true,
+  --       },
+  --       styles = {
+  --         types = "bold",
+  --         methods = "italic",
+  --         numbers = "NONE",
+  --         strings = "NONE",
+  --         comments = "italic",
+  --         keywords = "NONE",
+  --         constants = "bold",
+  --         functions = "italic",
+  --         operators = "NONE",
+  --         variables = "NONE",
+  --         parameters = "NONE",
+  --         conditionals = "NONE",
+  --         virtual_text = "NONE",
+  --       }
+  --     })
+  --     vim.cmd.colorscheme 'onedark_dark'
+  --     -- vim.cmd("hi PmenuSel guibg = #3A3B3C")
+  --     -- vim.cmd("hi Visual guibg = #3A3B3C")
+  --     -- vim.api.nvim_set_hl(0, 'Comment', { italic = true })
+  --   end,
+  -- },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
-        theme = 'horizon',
+        theme = 'tokyonight',
         section_separators = { left = '', right = '' },
         component_separators = { left = '|', right = '|' },
       },
@@ -180,12 +220,15 @@ require('lazy').setup({
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- See `:help indent_blankline.txt`
+    main = "ibl",
     opts = {
-      char = '|',
-      show_end_of_line = true,
+      indent = {
+        char = "╎"
+      }
+      -- show_end_of_line = true,
       -- show_current_context_start = true,
-      show_current_context = true,
-      show_trailing_blankline_indent = false,
+      -- show_current_context = true,
+      -- show_trailing_blankline_indent = false,
     },
   },
 
@@ -1081,5 +1124,7 @@ dap.configurations.java = {
   },
 }
 
+vim.cmd.colorscheme 'tokyonight-night'
+vim.cmd("hi TreesitterContext guibg=None")
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
