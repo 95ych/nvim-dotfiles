@@ -728,7 +728,9 @@ end, { silent = true })
 
 --Navigation
 vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
-
+--Terminal
+vim.keymap.set("n", "<Leader>t", ":terminal<CR>", { silent = true })
+vim.cmd("tnoremap <Esc> <C-\\><C-n>")
 -- Spell checking
 vim.keymap.set("n", "<Leader>sc", ":set spell!<CR>", { silent = true })
 
