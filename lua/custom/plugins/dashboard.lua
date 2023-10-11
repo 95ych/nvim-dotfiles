@@ -26,14 +26,22 @@ return {
 						action = 'Telescope projects',
 						key = 'p',
 					},
+					{
+						icon = ' ',
+						icon_hl = '@variable',
+						desc = 'Latest session',
+						group = 'Label',
+						action = 'SessionLoad',
+						key = 'ls',
+					},
 				},
 
 				project = {
 					enable = false,
-					limit = 8,
-					icon = 'your icon',
-					label = '',
-					action = 'Telescope find_files cwd=',
+					limit = 4,
+					icon = ' ',
+					label = 'Projects',
+					action = 'Telescope projects ',
 				},
 			},
 
