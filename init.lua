@@ -553,7 +553,7 @@ end
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
+  clangd = {},
   gopls = {},
   pyright = {},
   rust_analyzer = {},
@@ -745,6 +745,9 @@ vim.keymap.set({ "n" }, "<C-s>", ":w<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>rr", ":RunCode<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>rp", ":RunProject<CR>", { silent = true })
 
+--dap
+vim.keymap.set("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { silent = true })
+vim.keymap.set("n", "<Leader>dr", ":DapContinue<CR>", { silent = true })
 -- System clipboard
 vim.keymap.set({ "n", "v" }, "<Leader>y", [["+y]], { silent = true })
 vim.keymap.set({ "n", "v" }, "<Leader>p", [["+p]], { silent = true })

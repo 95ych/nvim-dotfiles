@@ -4,6 +4,7 @@ return {
 	'nvim-telescope/telescope-dap.nvim',
 	{
 		"rcarriga/nvim-dap-ui",
+		event = "VeryLazy",
 		dependencies = "mfussenegger/nvim-dap",
 		config = function()
 			local dap = require("dap")
@@ -26,11 +27,9 @@ return {
 				port = 13000
 			}
 			dap.configurations.cpp = {
-				-- 	{
-				-- 	name = "lldb",
-				-- 	type = "executable",
-				-- 	request = "launch"
-				-- }
+				name = "lldb1",
+				type = "executable",
+				request = "launch"
 			}
 		end
 	},
