@@ -7,11 +7,6 @@ snippet cp "cp starter template"
 	#define rep(i, begin, end)                                                                         \
 		for(__typeof(end) i = (begin) - ((begin) > (end)); i != (end) - ((begin) > (end));             \
 			i += 1 - 2 * ((begin) > (end)))
-	#ifndef ONLINE_JUDGE //DEBUG
-	#	include "prettyprint.hpp"
-	#else
-	#	define dbg (...)
-	#endif
 	#define INF 1000000000000000003
 	typedef long long int ll;
 	typedef pair<ll, ll> ii;
