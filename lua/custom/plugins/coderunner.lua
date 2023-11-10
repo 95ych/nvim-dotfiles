@@ -22,7 +22,7 @@ return {
 				typescript = "deno run",
 				rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
 				cpp =
-				"cd $dir && g++ -std=c++17 $fileName -o $fileNameWithoutExt && $dir/$fileNameWithoutExt"
+				"cd $dir && clang++ --debug $fileName -o $fileNameWithoutExt && $dir/$fileNameWithoutExt"
 			},
 		})
 	end
