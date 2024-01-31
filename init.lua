@@ -146,7 +146,7 @@ require('lazy').setup({
           -- Value is any valid attr-list value for `:help nvim_set_hl`
           comments = { italic = true },
           keywords = {},
-          functions = { italic = true, bold = true },
+          functions = { bold = true },
           variables = {},
           -- Background styles. Can be "dark", "transparent" or "normal"
           sidebars = "transparent", -- style for sidebars, see below
