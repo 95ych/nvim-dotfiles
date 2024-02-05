@@ -647,7 +647,7 @@ cmp.setup({
         cmp.select_next_item()
       end
     end,
-    ["<Tab>"] = cmp.mapping(function(fallback)
+    ["J"] = cmp.mapping(function(fallback)
       if not luasnip_available then
         return
       end
