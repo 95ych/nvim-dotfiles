@@ -904,8 +904,8 @@ local function enable_debugger(bufnr)
   require('jdtls.dap').setup_dap_main_class_configs()
 
   local opts = { buffer = bufnr }
-  vim.keymap.set('n', '<leader>dt', "<cmd>lua require('jdtls').test_class()<cr>", opts)
-  vim.keymap.set('n', '<leader>dn', "<cmd>lua require('jdtls').test_nearest_method()<cr>", opts)
+  vim.keymap.set('n', '<leader>tc', "<cmd>lua require('jdtls').test_class()<cr>", opts)
+  vim.keymap.set('n', '<leader>tm', "<cmd>lua require('jdtls').test_nearest_method()<cr>", opts)
 end
 
 local function jdtls_on_attach(client, bufnr)
