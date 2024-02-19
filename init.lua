@@ -1,44 +1,3 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, and understand
-  what your configuration is doing.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-  And then you can explore or search through `:help lua-guide`
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -73,7 +32,14 @@ require('lazy').setup({
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim',       tag = "legacy", opts = {} },
-
+      {
+        "SmiteshP/nvim-navbuddy",
+        dependencies = {
+          "SmiteshP/nvim-navic",
+          "MunifTanjim/nui.nvim"
+        },
+        opts = { lsp = { auto_attach = true } }
+      },
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
@@ -149,10 +115,10 @@ require('lazy').setup({
           functions = { bold = true },
           variables = {},
           -- Background styles. Can be "dark", "transparent" or "normal"
-          sidebars = "transparent", -- style for sidebars, see below
-          floats = "transparent",   -- style for floating windows
+          -- sidebars = "transparent",    -- style for sidebars, see below
+          sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+          floats = "transparent",      -- style for floating windows
         },
-        -- sidebars = { "qf", "help" },      -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
         -- day_brightness = 0.3,             -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
         -- hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
         -- dim_inactive = false,             -- dims inactive windows
@@ -172,38 +138,6 @@ require('lazy').setup({
     end
   },
 
-  -- {
-  --   -- Theme inspired by Atom
-  --   "olimorris/onedarkpro.nvim",
-  --   -- "folke/tokyonight.nvim",
-  --   priority = 1000,
-  --   config = function()
-  --     require("onedarkpro").setup({
-  --       options = {
-  --         transparency = true,
-  --       },
-  --       styles = {
-  --         types = "bold",
-  --         methods = "italic",
-  --         numbers = "NONE",
-  --         strings = "NONE",
-  --         comments = "italic",
-  --         keywords = "NONE",
-  --         constants = "bold",
-  --         functions = "italic",
-  --         operators = "NONE",
-  --         variables = "NONE",
-  --         parameters = "NONE",
-  --         conditionals = "NONE",
-  --         virtual_text = "NONE",
-  --       }
-  --     })
-  --     vim.cmd.colorscheme 'onedark_dark'
-  --     -- vim.cmd("hi PmenuSel guibg = #3A3B3C")
-  --     -- vim.cmd("hi Visual guibg = #3A3B3C")
-  --     -- vim.api.nvim_set_hl(0, 'Comment', { italic = true })
-  --   end,
-  -- },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -410,8 +344,10 @@ vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { des
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]resume' })
+vim.keymap.set('n', '<leader>sdd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sds', require('telescope.builtin').lsp_document_symbols,
+  { desc = '[S]earch [D]oc [S]ymbols' })
+vim.keymap.set('n', '<leader>sc', require('telescope.builtin').resume, { desc = '[S]earch [R]resume' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -558,9 +494,8 @@ local servers = {
   pyright = {},
   rust_analyzer = {},
   lemminx = {},
-  -- jdtls = {
-  -- },
-  -- tsserver = {},
+  jdtls = {
+  },
   html = { filetypes = { 'html', 'twig', 'hbs' } },
 
   lua_ls = {
@@ -708,54 +643,7 @@ cmp.setup({
     end,
   },
 })
--- Jump to start/end of line
-vim.keymap.set("n", "H", function()
-  local current_column = vim.fn.col(".")
-  if current_column == 1 then
-    vim.cmd.normal("_")
-  else
-    vim.fn.cursor(".", 1)
-  end
-end, { silent = true })
-vim.keymap.set("n", "L", function()
-  local current_column = vim.fn.col(".")
-  local end_column = vim.fn.col("$") - 1
-  if current_column == end_column then
-    vim.cmd.normal("g_")
-  else
-    vim.fn.cursor(".", end_column)
-  end
-end, { silent = true })
-
---Navigation
-vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
--- Spell checking
-vim.keymap.set("n", "<Leader>sc", ":set spell!<CR>", { silent = true })
-
--- NeoTree
-vim.keymap.set("n", "<Leader>f", ":Neotree toggle<CR>", { silent = true })
-
---Write
-vim.keymap.set({ "n" }, "<C-s>", ":w<CR>", { silent = true })
-
---CodeRunner
-vim.keymap.set("n", "<Leader>rr", ":RunCode<CR>", { silent = true })
-vim.keymap.set("n", "<Leader>rp", ":RunProject<CR>", { silent = true })
-
---dap
-vim.keymap.set("n", "<Leader>db", ":DapToggleBreakpoint<CR>", { silent = true })
-vim.keymap.set("n", "<Leader>dr", ":DapContinue<CR>", { silent = true })
--- System clipboard
-vim.keymap.set({ "n", "v" }, "<Leader>y", [["+y]], { silent = true })
-vim.keymap.set({ "n", "v" }, "<Leader>p", [["+p]], { silent = true })
-
---Barbar
-vim.keymap.set('n', '<C-p>', '<Cmd>BufferPick<CR>', { silent = true })
-vim.keymap.set('n', '<C-c>', '<Cmd>BufferClose<CR>', { silent = true })
-
--- Leap
--- vim.keymap.del({ 'x', 'o' }, 'x')
--- vim.keymap.del({ 'x', 'o' }, 'X')
+require "user.keymap"
 
 -- VimTex
 vim.g.tex_flavor = "latex"
@@ -779,6 +667,11 @@ require 'treesitter-context'.setup {
   zindex = 20,     -- The Z-index of the context window
   on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
+require('nvim-navbuddy').setup({
+  window = {
+    size = "90%",
+  }
+})
 vim.keymap.set("n", "[tc", function()
   require("treesitter-context").go_to_context()
 end, { silent = true })
