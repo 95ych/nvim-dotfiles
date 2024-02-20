@@ -42,7 +42,18 @@ vim.keymap.set({ "n", "v" }, "<Leader>p", [["+p]], { silent = true })
 --Barbar
 vim.keymap.set('n', '<C-p>', '<Cmd>BufferPick<CR>', { silent = true })
 vim.keymap.set('n', '<C-c>', '<Cmd>BufferClose<CR>', { silent = true })
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
 
+-- Move to previous/next
+map('n', '[b', '<Cmd>BufferPrevious<CR>', opts)
+map('n', ']b', '<Cmd>BufferNext<CR>', opts)
+-- Goto buffer in position...
+map('n', '<Leader>bf', '<Cmd>BufferGoto 1<CR>', opts)
+map('n', '<Leader>bl', '<Cmd>BufferLast<CR>', opts)
+-- Pin/unpin buffer
+map('n', '<Leader>bp', '<Cmd>BufferPin<CR>', opts)
+-- Sort automatically by...
 -- Leap
 -- vim.keymap.del({ 'x', 'o' }, 'x')
 -- vim.keymap.del({ 'x', 'o' }, 'X')
