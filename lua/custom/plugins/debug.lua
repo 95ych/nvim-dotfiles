@@ -47,19 +47,22 @@ return {
 			local wk = require "which-key"
 			wk.register {
 				["<leader>db"] = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
-				["<leader>dc"] = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
+				["<leader>dr"] = { "<cmd>lua require'dap'.continue()<cr>", "Run" },
 				["<leader>dC"] = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
 				["<leader>dd"] = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
 				["<leader>dgs"] = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
 				["<leader>dB"] = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
-				["<leader>di"] = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
-				["<leader>do"] = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
-				["<leader>du"] = { "<cmd>lua require'dap'.step_out()<cr>", "Step up" },
+				["<leader>dn"] = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
+				["<leader>dN"] = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
+				["<leader>do"] = { "<cmd>lua require'dap'.step_out()<cr>", "Step up" },
 				["<leader>dp"] = { "<cmd>lua require'dap'.pause()<cr>", "Pause" },
 				["<leader>dq"] = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
 				["<leader>dtr"] = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
 				["<leader>dtu"] = { "<cmd>lua require'dapui'.toggle({reset = true})<cr>", "Toggle UI" },
 			}
+			vim.keymap.set('n', '<leader>dB', function()
+				dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+			end, { desc = 'Debug: Set Breakpoint' })
 		end
 	},
 	{
