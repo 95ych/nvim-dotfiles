@@ -39,6 +39,19 @@ vim.keymap.set("n", "<Leader>rp", ":RunProject<CR>", { silent = true })
 vim.keymap.set({ "n", "v" }, "<Leader>y", [["+y]], { silent = true })
 vim.keymap.set({ "n", "v" }, "<Leader>p", [["+p]], { silent = true })
 
+--TODO nvim
+vim.keymap.set("n", "]t", function()
+	require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+	require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
+
+-- You can also specify a list of valid jump keywords
+-- vim.keymap.set("n", "]t", function()
+-- 	require("todo-comments").jump_next({ keywords = { "ERROR", "WARNING" } })
+-- end, { desc = "Next error/warning todo comment" })
 --Barbar
 vim.keymap.set('n', '<C-p>', '<Cmd>BufferPick<CR>', { silent = true })
 vim.keymap.set('n', '<C-c>', '<Cmd>BufferClose<CR>', { silent = true })
