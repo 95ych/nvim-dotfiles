@@ -504,6 +504,76 @@ local servers = {
   rust_analyzer = {},
   lemminx = {},
   html = { filetypes = { 'html', 'twig', 'hbs' } },
+  jdtls = {
+    java = {
+      -- jdt = {
+      --   ls = {
+      --     vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
+      --   }
+      -- },
+      project = {
+        referencedLibraries = {
+          '/Users/sagar/dependency-jars/*.jar'
+        },
+      },
+      eclipse = {
+        downloadSources = true,
+      },
+      configuration = {
+        updateBuildConfiguration = 'interactive',
+      },
+      maven = {
+        downloadSources = true,
+      },
+      implementationsCodeLens = {
+        enabled = true,
+      },
+      referencesCodeLens = {
+        enabled = true,
+      },
+      inlayHints = {
+        parameterNames = {
+          enabled = 'all' -- literals, all, none
+        }
+      },
+      format = {
+        enabled = true,
+        -- settings = {
+        --   profile = 'asdf'
+        -- },
+      }
+    },
+    signatureHelp = {
+      enabled = true,
+    },
+    completion = {
+      favoriteStaticMembers = {
+        'org.hamcrest.MatcherAssert.assertThat',
+        'org.hamcrest.Matchers.*',
+        'org.hamcrest.CoreMatchers.*',
+        'org.junit.jupiter.api.Assertions.*',
+        'java.util.Objects.requireNonNull',
+        'java.util.Objects.requireNonNullElse',
+        'org.mockito.Mockito.*',
+      },
+    },
+    contentProvider = {
+      preferred = 'fernflower',
+    },
+    sources = {
+      organizeImports = {
+        starThreshold = 9999,
+        staticStarThreshold = 9999,
+      }
+    },
+    codeGeneration = {
+      toString = {
+        template =
+        '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
+      },
+      useBlocks = true,
+    },
+  },
 
   lua_ls = {
     Lua = {
@@ -527,9 +597,10 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
+
 mason_lspconfig.setup_handlers {
   function(server_name)
-    if server_name == 'jdtls' then
+    if server_name == "jdtls" then
       return
     end
     require('lspconfig')[server_name].setup {
