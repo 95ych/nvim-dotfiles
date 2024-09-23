@@ -181,19 +181,19 @@ return {
 				"FormatModificationsDocumentFormattingGroup",
 				{ clear = false }
 			)
-			vim.api.nvim_clear_autocmds({ group = augroup_id, buffer = bufnr })
-
-			vim.api.nvim_create_autocmd(
-				{ "BufWritePre" },
-				{
-					group = augroup_id,
-					buffer = bufnr,
-					callback = function()
-						local lsp_format_modifications = require "lsp-format-modifications"
-						lsp_format_modifications.format_modifications(client, bufnr)
-					end,
-				}
-			)
+			-- vim.api.nvim_clear_autocmds({ group = augroup_id, buffer = bufnr })
+			--
+			-- vim.api.nvim_create_autocmd(
+			-- 	{ "BufWritePre" },
+			-- 	{
+			-- 		group = augroup_id,
+			-- 		buffer = bufnr,
+			-- 		callback = function()
+			-- 			local lsp_format_modifications = require "lsp-format-modifications"
+			-- 			lsp_format_modifications.format_modifications(client, bufnr)
+			-- 		end,
+			-- 	}
+			-- )
 			if features.debugger then
 				enable_debugger(bufnr)
 			end

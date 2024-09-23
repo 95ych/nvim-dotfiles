@@ -157,10 +157,11 @@ require('lazy').setup({
     main = "ibl",
     opts = {
       indent = {
-        char = "╎"
+        -- char = "|"
       },
+      exclude = { filetypes = { "terminal", "dashboard" } },
       scope = {
-        show_start = false,
+        show_start = true,
         show_end = false
       }
       -- show_end_of_line = true,
