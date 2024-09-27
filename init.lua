@@ -32,14 +32,14 @@ require('lazy').setup({
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim',       tag = "legacy", opts = {} },
-      {
-        "SmiteshP/nvim-navbuddy",
-        dependencies = {
-          "SmiteshP/nvim-navic",
-          "MunifTanjim/nui.nvim"
-        },
-        opts = { lsp = { auto_attach = true } }
-      },
+      -- {
+      --   "SmiteshP/nvim-navbuddy",
+      --   dependencies = {
+      --     "SmiteshP/nvim-navic",
+      --     "MunifTanjim/nui.nvim"
+      --   },
+      --  opts = { lsp = { auto_attach = true } }
+      -- },
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
@@ -1104,11 +1104,11 @@ require 'treesitter-context'.setup {
   zindex = 20,     -- The Z-index of the context window
   on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
-require('nvim-navbuddy').setup({
-  window = {
-    size = "90%",
-  }
-})
+-- require('nvim-navbuddy').setup({
+--   window = {
+--     size = "90%",
+--   }
+-- })
 vim.keymap.set("n", "[tc", function()
   require("treesitter-context").go_to_context()
 end, { silent = true })
