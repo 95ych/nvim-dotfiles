@@ -22,7 +22,7 @@ vim.keymap.set("i", "<C-l>", "<Right>", { silent = true })
 vim.keymap.set("n", "<Leader>sc", ":set spell!<CR>", { silent = true })
 
 -- NeoTree
-vim.keymap.set("n", "<Leader>f", ":Neotree toggle<CR>", { silent = true })
+vim.keymap.set("n", "<Leader>f", ":Neotree toggle=true reveal <CR>", { silent = true })
 --NavBuddy
 vim.keymap.set("n", "<Leader>o", ":Navbuddy<CR>", { silent = true }) --Outline symbols
 
